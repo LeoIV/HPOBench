@@ -182,7 +182,7 @@ class MLBenchmark(AbstractBenchmark):
         )
         # fitting the model with subsampled data
         start = time.time()
-        model.fit(train_X[train_idx], train_y.iloc[train_idx])
+        model.fit(train_X[train_idx], list(map(lambda x: 1 if x=='won' else 0, train_y.iloc[train_idx])))
         model_fit_time = time.time() - start
         # computing statistics on training data
         scores = dict()
@@ -214,7 +214,7 @@ class MLBenchmark(AbstractBenchmark):
         val_score_cost = dict()
         for k, v in self.scorers.items():
             _start = time.time()
-            val_scores[k] = v(model, self.valid_X, self.valid_y)
+            val_scores[k] = v(model, self.valid_X,list(map(lambda x: 1 if x=='won' else 0, self.valid_y)))
             val_score_cost[k] = time.time() - _start
         val_loss = 1 - val_scores["acc"]
 
@@ -222,7 +222,7 @@ class MLBenchmark(AbstractBenchmark):
         test_score_cost = dict()
         for k, v in self.scorers.items():
             _start = time.time()
-            test_scores[k] = v(model, self.test_X, self.test_y)
+            test_scores[k] = v(model, self.test_X, list(map(lambda x: 1 if x=='won' else 0, self.test_y)))
             test_score_cost[k] = time.time() - _start
         test_loss = 1 - test_scores["acc"]
 
