@@ -1,0 +1,45 @@
+[tool.poetry]
+name = "hpobench"
+version = "0.0.1"
+description = "Benchmark-Suite for Hyperparameter Optimization"
+authors = ["eggenspk@informatik.uni-freiburg.de"]
+license = "Apache-2.0"
+readme = "README.md"
+homepage = "https://www.automl.org/automl/hpobench/"
+repository = "https://github.com/automl/HPOBench"
+documentation = "https://automl.github.io/HPOBench/"
+classifiers = [
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Development Status :: 3 - Alpha",
+    "Natural Language :: English",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: POSIX :: Linux",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Software Development",
+]
+packages = [{ include = "hpobench" }]
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.12"
+scipy = ">=1.4.1"
+ConfigSpace = ">=0.4.12"
+Pyro4 = "4.80"
+oslo-concurrency = ">=4.2.0"
+numpy = "^1.25.0"
+
+[tool.poetry.extras]
+
+[tool.poetry.scripts]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

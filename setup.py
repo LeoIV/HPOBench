@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
-import setuptools
 import json
 import os
-
+import pathlib
+import setuptools
 
 def get_extra_requirements():
     """ Helper function to read in all extra requirement files in the extra
@@ -21,6 +21,9 @@ def read_file(file_name):
     return text
 
 
+def find_packages(path):
+    return [p.name for p in (pathlib.Path('.') / path).glob('*/__init__.py')]
+
 setuptools.setup(
     name='hpobench',
     author_email='eggenspk@informatik.uni-freiburg.de',
@@ -34,7 +37,7 @@ setuptools.setup(
         'Source Code': 'https://github.com/automl/HPOBench'
     },
     version=read_file('hpobench/__version__.py').split()[-1].strip('\''),
-    packages=setuptools.find_packages(exclude=['*.tests', '*.tests.*',
+    packages=find_packages(exclude=['*.tests', '*.tests.*',
                                                'tests.*', 'tests'],),
     python_requires='>=3.6, <=3.10',
     install_requires=read_file('./requirements.txt').split('\n'),
