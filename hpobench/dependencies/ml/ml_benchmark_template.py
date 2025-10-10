@@ -43,13 +43,14 @@ class MLBenchmark(AbstractBenchmark):
         if isinstance(rng, int):
             self.seed = rng
         else:
-            self.seed = self.rng.randint(1, 10**6)
+            self.seed = self.rng.randint(1, 10 ** 6)
 
         self.global_seed = global_seed  # used for fixed training-validation splits
 
         self.task_id = task_id
         self.valid_size = valid_size
         self.scorers = dict()
+        self.label_mapper = dict()
         for k, v in metrics.items():
             self.scorers[k] = make_scorer(v, **metrics_kwargs[k])
 
@@ -80,6 +81,17 @@ class MLBenchmark(AbstractBenchmark):
         # Observation and fidelity spaces
         self.fidelity_space = self.get_fidelity_space(self.seed)
         self.configuration_space = self.get_configuration_space(self.seed)
+
+    def map_labels(self, y):
+        def lmap(_y):
+            if _y in self.label_mapper:
+                return self.label_mapper[_y]
+            else:
+                v = len(self.label_mapper)
+                self.label_mapper[_y] = v
+                return v
+
+        return list(map(lmap, y))
 
     @staticmethod
     def get_configuration_space(seed: Union[int, None] = None) -> CS.ConfigurationSpace:
@@ -182,7 +194,7 @@ class MLBenchmark(AbstractBenchmark):
         )
         # fitting the model with subsampled data
         start = time.time()
-        model.fit(train_X[train_idx], list(map(lambda x: 1 if x=='won' else 0, train_y.iloc[train_idx])))
+        model.fit(train_X[train_idx], self.map_labels(train_y.iloc[train_idx]))
         model_fit_time = time.time() - start
         # computing statistics on training data
         scores = dict()
@@ -214,7 +226,7 @@ class MLBenchmark(AbstractBenchmark):
         val_score_cost = dict()
         for k, v in self.scorers.items():
             _start = time.time()
-            val_scores[k] = v(model, self.valid_X,list(map(lambda x: 1 if x=='won' else 0, self.valid_y)))
+            val_scores[k] = v(model, self.valid_X, self.map_labels(self.valid_y))
             val_score_cost[k] = time.time() - _start
         val_loss = 1 - val_scores["acc"]
 
@@ -222,7 +234,7 @@ class MLBenchmark(AbstractBenchmark):
         test_score_cost = dict()
         for k, v in self.scorers.items():
             _start = time.time()
-            test_scores[k] = v(model, self.test_X, list(map(lambda x: 1 if x=='won' else 0, self.test_y)))
+            test_scores[k] = v(model, self.test_X, self.map_labels(self.test_y))
             test_score_cost[k] = time.time() - _start
         test_loss = 1 - test_scores["acc"]
 
