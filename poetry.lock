@@ -742,9 +742,9 @@ tensorflow = ">=1.12.0"
 
 [package.source]
 type = "git"
-url = "https://github.com/google-research/nasbench.git"
+url = "https://github.com/gabikadlecova/nasbench.git"
 reference = "HEAD"
-resolved_reference = "b94247037ee470418a3e56dcb83814e9be83f3a8"
+resolved_reference = "eca75c40e0ab01e5a6dcbc86b11a9652233905b7"
 
 [[package]]
 name = "netaddr"
@@ -2052,4 +2052,4 @@ test = ["pytest", "pytest-cov"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10,<3.12"
-content-hash = "f77a624c60748ef682b275fe51bdbd0902003ceeea41fa00d0a60566b3fbaf1f"
+content-hash = "60e49894e5529644f6c42f872ecfc654ce9adefc503e9e102173de16ee48a886"

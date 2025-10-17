@@ -39,9 +39,9 @@ scikit-learn = "~1.3.2"
 pandas = "^2.3.3"
 openml = "~0.10.0"
 xgboost = "~2.1.0"
-nas-benchmarks = {git = "https://github.com/automl/nas_benchmarks.git"}
-nasbench = {git = "https://github.com/google-research/nasbench.git"}
 tensorflow = "~2.19.0"
+nasbench = {git = "https://github.com/gabikadlecova/nasbench.git"}
+nas-benchmarks = {git = "https://github.com/automl/nas_benchmarks.git"}
 
 [tool.poetry.extras]
 
