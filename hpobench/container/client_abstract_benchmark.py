@@ -217,7 +217,7 @@ class AbstractBenchmarkClient(metaclass=abc.ABCMeta):
 
                     container_dir.mkdir(parents=True, exist_ok=True)
 
-                    cmd = f'singularity pull --dir {self.config.container_dir} ' \
+                    cmd = f'limactl shell apptainer apptainer pull --dir {self.config.container_dir} ' \
                           f'--name {self.container_name_with_tag} '
 
                     # Currently, we can't see the available container tags on gitlab. Therefore, we create for each
